@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from typing import Optional
 
 app=FastAPI()
 
@@ -7,17 +8,31 @@ def index():
     return {'arun':'ak',
             'arjun':'aj'}
 
-@app.get('/blog/{id}')
-def bl_fun(id:int):
-    return {
-        "blog no":id
-    }
+
+@app.get('/blog')
+def bl_fun(limit,published:bool=True, sort:Optional[str]=None):
+     if published:    
+              return {
+        "data":f'{limit} blog.these are published ones'
+                     }
+     else:
+           return{
+                 "data":f'{limit} blog.these are not published '
+           }
+     
+
 
 @app.get('/blog/{id}/comment')
 def bl_comment(id):
     return {'comments':{'i used the this product.it is awesome',
                         "worst product.don't waste your money" }}
 
+
+# @app.get('/blog')
+# def bl_fun(id:int):
+#     return {
+#         "blog no":id
+#     }
 
 # @app.get('/about/')
 # def index():
